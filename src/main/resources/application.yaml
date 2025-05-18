@@ -2,10 +2,14 @@ spring:
   datasource:
     username: root
     password: 1234
-    url: jdbc:mysql://localhost:3306/social_media?createDatabaseIfNotExist=true&useSSL=false
+    url: jdbc:mysql://localhost:3306/social_media?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+jwt:
+  secret-key: secret-key-secret-key-secret-key-secret-key
+  access-token-expiration: 600000
+  refresh-token-expiration: 604800000
 
