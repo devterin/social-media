@@ -42,8 +42,7 @@ public class UserService {
 
     public UserResponse updateUser(Long userId, UpdateUserRequest request) {
         User user = userRepository.findById(userId).orElseThrow(
-                () -> new RuntimeException("User not found")
-        );
+                () -> new RuntimeException("User not found"));
 
         userMapper.updateUserFromDto(user, request);
         user.setPassword(passwordEncoder.encode(request.getPassword()));

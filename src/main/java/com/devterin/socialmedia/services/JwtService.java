@@ -3,6 +3,7 @@ package com.devterin.socialmedia.services;
 import com.devterin.socialmedia.entities.Role;
 import com.devterin.socialmedia.entities.User;
 import com.devterin.socialmedia.repositories.UserRepository;
+import com.devterin.socialmedia.security.OurUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -94,9 +95,9 @@ public class JwtService {
                 .getBody();
     }
 
-    public boolean isTokenValid(String token, String username) {
+    public boolean isTokenValid(String token, UserDetails userDetails) {
         final String extractedUsername = extractUsername(token);
-        return (extractedUsername.equals(username)) && !isTokenExpired(token);
+        return (extractedUsername.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
     private boolean isTokenExpired(String token) {

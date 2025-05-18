@@ -7,7 +7,5 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface AuthMapper {
-    @Mapping(target = "accessToken", source = "accessToken")
-    @Mapping(target = "refreshToken", source = "refreshToken")
     LoginResponse toDto(String accessToken, String refreshToken);
 }
