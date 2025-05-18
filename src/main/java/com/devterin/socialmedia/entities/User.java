@@ -12,6 +12,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
@@ -54,9 +55,9 @@ public class User extends BaseEntity{
     private List<Relationship> userTwoRelationship;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<Reaction> likes;
+    private Set<Reaction> reactions;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),  // FK User
