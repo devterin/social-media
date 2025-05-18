@@ -21,13 +21,13 @@ public class ApplicationInitConfig {
     private final PasswordEncoder passwordEncoder;
     private static final String ADMIN_USERNAME = "admin";
     private static final String ADMIN_EMAIL = "admin@gmail.com";
-    private static final String ADMIN_PASSWORD = "123";
     private static final String USER_USERNAME = "user";
     private static final String USER_EMAIL = "user@gmail.com";
-    private static final String USER_PASSWORD = "123";
+    private static final String PASSWORD = "123";
 
     @Bean
-    public ApplicationRunner applicationRunner(UserRepository userRepository, RoleRepository roleRepository) {
+    public ApplicationRunner applicationRunner(UserRepository userRepository,
+                                               RoleRepository roleRepository) {
 
         return args -> {
             Role roleAdmin = roleRepository.findByName(AppConstants.ADMIN_ROLE).orElseGet(
@@ -48,7 +48,7 @@ public class ApplicationInitConfig {
                 User admin = User.builder()
                         .username(ADMIN_USERNAME)
                         .email(ADMIN_EMAIL)
-                        .password(passwordEncoder.encode(ADMIN_PASSWORD))
+                        .password(passwordEncoder.encode(PASSWORD))
                         .roles(Set.of(roleAdmin))
                         .build();
                 userRepository.save(admin);
@@ -57,7 +57,7 @@ public class ApplicationInitConfig {
                 User admin = User.builder()
                         .username(USER_USERNAME)
                         .email(USER_EMAIL)
-                        .password(passwordEncoder.encode(USER_PASSWORD))
+                        .password(passwordEncoder.encode(PASSWORD))
                         .roles(Set.of(roleUser))
                         .build();
                 userRepository.save(admin);

@@ -1,10 +1,16 @@
 package com.devterin.socialmedia.entities;
 
 import com.devterin.socialmedia.enums.UserStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -16,7 +22,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
-public class User extends BaseEntity{
+public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
@@ -64,4 +70,6 @@ public class User extends BaseEntity{
             inverseJoinColumns = @JoinColumn(name = "role_id") // FK Role
     )
     private Set<Role> roles;
+
+
 }

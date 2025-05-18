@@ -18,7 +18,6 @@ import java.util.HashMap;
 @RequiredArgsConstructor
 public class AuthService {
     private final AuthMapper authMapper;
-
     private final JwtService jwtService;
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
@@ -30,9 +29,9 @@ public class AuthService {
         UsernamePasswordAuthenticationToken authToken =
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword());
 
-        Authentication authentication = authenticationManager.authenticate(authToken);
+        authenticationManager.authenticate(authToken);
 
-        var accessToken = jwtService.generateToken(new HashMap<>(), user.getUsername());
+        var accessToken = jwtService.generateToken(user.getUsername());
         var refreshToken = jwtService.generateRefreshToken(user.getUsername());
 
         return authMapper.toDto(accessToken, refreshToken);
