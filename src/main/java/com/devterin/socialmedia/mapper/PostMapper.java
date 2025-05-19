@@ -4,7 +4,6 @@ import com.devterin.socialmedia.dtos.request.CreatePostRequest;
 import com.devterin.socialmedia.dtos.response.PostResponse;
 import com.devterin.socialmedia.entities.Post;
 import com.devterin.socialmedia.entities.PostImage;
-import com.devterin.socialmedia.entities.User;
 import com.devterin.socialmedia.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -20,14 +19,11 @@ public class PostMapper {
     private final UserRepository userRepository;
 
     public Post toEntity(CreatePostRequest request) {
-        User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
         List<PostImage> images = Optional.ofNullable(request.getImageUrls())
                 .orElse(Collections.emptyList())
                 .stream().map(url -> PostImage.builder().imageUrl(url).build()).toList();
 
         return Post.builder()
-                .user(user)
                 .content(request.getContent())
                 .images(images)
                 .build();

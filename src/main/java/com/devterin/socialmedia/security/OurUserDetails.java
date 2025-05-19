@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OurUserDetails implements UserDetails {
+    private Long id;
     private String username;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;

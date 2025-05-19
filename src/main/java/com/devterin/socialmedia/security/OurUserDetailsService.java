@@ -27,6 +27,6 @@ public class OurUserDetailsService implements UserDetailsService {
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName()))
                 .toList();
 
-        return new OurUserDetails(user.getUsername(), user.getPassword(), authorities);
+        return new OurUserDetails(user.getId(), user.getUsername(), user.getPassword(), authorities);
     }
 }

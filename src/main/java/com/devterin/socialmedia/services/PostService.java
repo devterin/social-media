@@ -1,6 +1,7 @@
 package com.devterin.socialmedia.services;
 
 import com.devterin.socialmedia.dtos.request.CreatePostRequest;
+import com.devterin.socialmedia.dtos.request.UpdatePostRequest;
 import com.devterin.socialmedia.dtos.response.PostResponse;
 import com.devterin.socialmedia.entities.Post;
 import com.devterin.socialmedia.entities.PostImage;
@@ -11,13 +12,16 @@ import com.devterin.socialmedia.repositories.PostRepository;
 import com.devterin.socialmedia.repositories.UserRepository;
 import com.devterin.socialmedia.utils.AppConstants;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,10 +32,8 @@ public class PostService {
     private final PostMapper postMapper;
     private final FirebaseService firebaseService;
 
-
     public PostResponse createPost(CreatePostRequest request, List<MultipartFile> files) {
-        User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        User user = getCurrentUser();
 
         List<PostImage> postImages = new ArrayList<>();
 
@@ -60,8 +62,26 @@ public class PostService {
         return postMapper.toDto(savedPost);
     }
 
-    public PostResponse updatePost() {
+    public PostResponse updatePost(UpdatePostRequest request, Long postId) {
+        User user = getCurrentUser();
 
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new UsernameNotFoundException("Post not found"));
+
+        if (user.getUsername().equals(post.getUser().getUsername())) {
+            post.setContent(request.getContent());
+        }
+        return postMapper.toDto(postRepository.save(post));
+    }
+
+    @Transactional
+    public void deletePost(Long postId) {
+        User user = getCurrentUser();
+        postRepository.deleteById(postId);
+    }
+
+    public List<PostResponse> getAllPosts() {
+        return postRepository.findAll().stream().map(postMapper::toDto).collect(Collectors.toList());
     }
 
     public PostResponse getPostById(Long postId) {
@@ -71,5 +91,14 @@ public class PostService {
         return postMapper.toDto(post);
     }
 
+    public User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new UsernameNotFoundException("User not authenticated");
+        }
+        String username = authentication.getName();
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
 
 }

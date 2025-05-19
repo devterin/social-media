@@ -4,9 +4,9 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
+
 @Data
 @Builder
-public class CreatePostRequest {
+public class UpdatePostRequest {
     private String content;
-    private List<String> imageUrls;
 }

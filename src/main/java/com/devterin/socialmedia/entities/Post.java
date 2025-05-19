@@ -21,10 +21,10 @@ public class Post {
     @Column(name = "content")
     private String content;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<PostImage> images;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
