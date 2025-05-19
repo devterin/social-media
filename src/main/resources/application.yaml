@@ -1,15 +1,22 @@
 spring:
   datasource:
-    username: root
-    password: 1234
-    url: jdbc:mysql://localhost:3306/social_media?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    url: jdbc:mysql://localhost:3306/${DB_NAME}?useSSL=false&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+
 jwt:
-  secret-key: 5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437
-  access-token-expiration: 600000
-  refresh-token-expiration: 604800000
+  secret-key: ${JWT_SECRET_KEY}
+  access-token-expiration: ${JWT_ACCESS_TOKEN_EXPIRATION}
+  refresh-token-expiration: ${JWT_REFRESH_TOKEN_EXPIRATION}
+
+firebase:
+  credentials:
+    path: ${FIREBASE_CREDENTIALS_PATH}
+  storageBucket:
+    name: ${FIREBASE_STORAGEBUCKET_NAME}
 
