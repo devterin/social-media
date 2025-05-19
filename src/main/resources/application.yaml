@@ -20,3 +20,9 @@ firebase:
   storageBucket:
     name: ${FIREBASE_STORAGEBUCKET_NAME}
 
+logging:
+  level:
+    org.springframework.web.socket: DEBUG
+    org.springframework.messaging: DEBUG
+
+

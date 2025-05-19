@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/reaction")
@@ -18,8 +20,8 @@ public class ReactionController {
     private final ReactionService reactionService;
 
     @PostMapping
-    public ResponseEntity<ReactionResponse> addReaction(@RequestBody ReactionRequest request) {
-        ReactionResponse response = reactionService.addReaction(request);
+    public ResponseEntity<ReactionResponse> addReaction(@RequestBody ReactionRequest request, Principal principal) {
+        ReactionResponse response = reactionService.addReaction(request, principal);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
