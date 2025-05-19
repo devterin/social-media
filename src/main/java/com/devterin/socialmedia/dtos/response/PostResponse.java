@@ -9,6 +9,7 @@ import java.util.List;
 @Builder
 public class PostResponse {
     private Long postId;
+    private String username;
     private String content;
     private List<String> imageUrls;
     private Integer likeCount;
