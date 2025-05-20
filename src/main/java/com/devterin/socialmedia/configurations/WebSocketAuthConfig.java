@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class WebSocketAuthInterceptor implements ChannelInterceptor {
+public class WebSocketAuthConfig implements ChannelInterceptor {
     private final JwtService jwtService;
     private final OurUserDetailsService userDetailsService;
 

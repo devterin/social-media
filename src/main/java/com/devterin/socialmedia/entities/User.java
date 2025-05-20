@@ -11,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -59,6 +60,9 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "userTwo", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Relationship> userTwoRelationship;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Post> posts;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Reaction> reactions;

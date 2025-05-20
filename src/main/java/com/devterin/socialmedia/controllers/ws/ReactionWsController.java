@@ -23,13 +23,13 @@ public class ReactionWsController {
     @MessageMapping("/reaction")
     public ReactionResponse processReaction(@Payload ReactionRequest request, Principal principal) {
         ReactionResponse reactionResponse = reactionService.addReaction(request, principal);
-        messagingTemplate.convertAndSend("/topic/reactions/added" + request.getPostId(), reactionResponse);
+        messagingTemplate.convertAndSend("/topic/reactions/added/" + request.getPostId(), reactionResponse);
         return reactionResponse;
     }
 
     @MessageMapping("/reaction/delete/{postId}")
     public void deleteReaction(@DestinationVariable Long postId, Principal principal) {
         ReactionResponse reactionResponse = reactionService.deleteReaction(postId, principal);
-        messagingTemplate.convertAndSend("/topic/reactions/deleted" + postId, reactionResponse);
+        messagingTemplate.convertAndSend("/topic/reactions/deleted/" + postId, reactionResponse);
     }
 }

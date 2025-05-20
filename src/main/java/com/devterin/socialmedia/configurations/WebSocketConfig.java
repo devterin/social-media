@@ -12,7 +12,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @RequiredArgsConstructor
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
-    private final WebSocketAuthInterceptor webSocketAuthInterceptor;
+    private final WebSocketAuthConfig webSocketAuthConfig;
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
@@ -30,7 +30,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureClientInboundChannel(ChannelRegistration registration) {
-        registration.interceptors(webSocketAuthInterceptor);
+        registration.interceptors(webSocketAuthConfig);
     }
 
 }
