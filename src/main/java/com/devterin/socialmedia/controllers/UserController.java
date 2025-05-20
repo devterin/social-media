@@ -10,15 +10,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/user")
 public class UserController {
     private final UserService userService;
 
     @PostMapping
     public ResponseEntity<UserResponse> createUser(@RequestBody CreateUserRequest request) {
         UserResponse user = userService.createUser(request);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
@@ -26,7 +25,6 @@ public class UserController {
     public ResponseEntity<UserResponse> updateUser(@PathVariable Long userId,
                                                    @RequestBody UpdateUserRequest request) {
         UserResponse user = userService.updateUser(userId, request);
-
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 }

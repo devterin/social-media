@@ -1,4 +1,4 @@
-package com.devterin.socialmedia.controllers;
+package com.devterin.socialmedia.controllers.ws;
 
 import com.devterin.socialmedia.dtos.request.ReactionRequest;
 import com.devterin.socialmedia.dtos.response.ReactionResponse;
@@ -23,15 +23,13 @@ public class ReactionWsController {
     @MessageMapping("/reaction")
     public ReactionResponse processReaction(@Payload ReactionRequest request, Principal principal) {
         ReactionResponse reactionResponse = reactionService.addReaction(request, principal);
-        messagingTemplate.convertAndSend("/topic/post/" + request.getPostId() + "/reactions/added", reactionResponse);
+        messagingTemplate.convertAndSend("/topic/reactions/added" + request.getPostId(), reactionResponse);
         return reactionResponse;
     }
-
 
     @MessageMapping("/reaction/delete/{postId}")
     public void deleteReaction(@DestinationVariable Long postId, Principal principal) {
         ReactionResponse reactionResponse = reactionService.deleteReaction(postId, principal);
-        messagingTemplate.convertAndSend("/topic/post/" + postId + "/reactions/deleted", reactionResponse);
-        System.out.println("Đã xóa reaction: " + reactionResponse);
+        messagingTemplate.convertAndSend("/topic/reactions/deleted" + postId, reactionResponse);
     }
 }

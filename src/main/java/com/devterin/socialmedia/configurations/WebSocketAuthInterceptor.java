@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 public class WebSocketAuthInterceptor implements ChannelInterceptor {
     private final JwtService jwtService;
     private final OurUserDetailsService userDetailsService;
+
     @NonNull
     @Override
     public Message<?> preSend(@NonNull Message<?> message, @NonNull MessageChannel channel) {

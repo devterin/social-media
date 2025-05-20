@@ -28,7 +28,6 @@ public class AuthService {
 
         UsernamePasswordAuthenticationToken authToken =
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword());
-
         authenticationManager.authenticate(authToken);
 
         var accessToken = jwtService.generateToken(user.getUsername());

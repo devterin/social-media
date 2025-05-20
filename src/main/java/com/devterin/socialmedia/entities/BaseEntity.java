@@ -20,7 +20,6 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity implements Serializable {
-
     @CreatedDate
     @Column(name = "created_at", updatable = false, columnDefinition = "DATETIME(2)")
     private LocalDateTime createdAt;

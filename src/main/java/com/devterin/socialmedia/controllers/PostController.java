@@ -24,6 +24,7 @@ public class PostController {
         var post = postService.createPost(request, files);
         return ResponseEntity.status(HttpStatus.CREATED).body(post);
     }
+
     @PutMapping("/{postId}")
     public ResponseEntity<PostResponse> updatePost(@PathVariable Long postId,
                                                    @RequestBody UpdatePostRequest request) {

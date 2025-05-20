@@ -20,7 +20,6 @@ public class FirebaseConfig {
 
     @Value("${firebase.storageBucket.name}")
     private String storageBucketName;
-
     @Bean
     public FirebaseApp initializeFirebase() throws IOException {
         if (FirebaseApp.getApps().isEmpty()) {
@@ -36,7 +35,6 @@ public class FirebaseConfig {
             return FirebaseApp.getInstance();
         }
     }
-
     @Bean
     public StorageClient storageClient(FirebaseApp firebaseApp) {
         return StorageClient.getInstance(firebaseApp);

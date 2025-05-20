@@ -16,8 +16,6 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class PostMapper {
-    private final UserRepository userRepository;
-
     public Post toEntity(CreatePostRequest request) {
         List<PostImage> images = Optional.ofNullable(request.getImageUrls())
                 .orElse(Collections.emptyList())
