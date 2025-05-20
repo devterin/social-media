@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -48,6 +49,30 @@ public class ReactionService {
                 .type(savedReaction.getType())
                 .totalReactions(totalReactions)
                 .build();
+    }
+
+
+    public ReactionResponse deleteReaction(Long postId, Principal principal) {
+        String username = principal.getName();
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found: " + postId));
+
+        Optional<Reaction> optional = reactionRepository.findByPostAndUser(post, user);
+
+        ReactionResponse.ReactionResponseBuilder responseBuilder = ReactionResponse.builder()
+                .postId(post.getId())
+                .username(user.getUsername());
+        optional.ifPresent(reaction -> {
+            responseBuilder.id(reaction.getId());
+            responseBuilder.type(reaction.getType());
+            reactionRepository.delete(reaction);
+        });
+        int totalReactions = reactionRepository.countByPostId(post.getId());
+        responseBuilder.totalReactions(totalReactions);
+
+        return responseBuilder.build();
     }
 
 
