@@ -8,6 +8,8 @@ import com.devterin.socialmedia.utils.DateTimeUtil;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 @Component
 public class NotifyMapper {
 
@@ -17,7 +19,8 @@ public class NotifyMapper {
                 .message(request.getMessage())
                 .type(request.getType())
                 .redirectUrl(request.getRedirectUrl())
-                .isRead(false)
+                .createdAt(new Date())
+                .read(false)
                 .build();
     }
 
@@ -33,6 +36,4 @@ public class NotifyMapper {
                 .timeDifference(DateTimeUtil.getTimeDifference(notification.getCreatedAt()))
                 .build();
     }
-
-
 }

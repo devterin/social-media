@@ -36,7 +36,7 @@ public class Notification {
     private User receiver;
 
     @Column(name = "is_read", nullable = false)
-    private boolean isRead = false;
+    private boolean read = false;
 
     @Column(name = "redirect_url")
     private String redirectUrl;

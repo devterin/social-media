@@ -1,5 +1,6 @@
 package com.devterin.socialmedia.services;
 
+import com.devterin.socialmedia.dtos.request.NotifyRequest;
 import com.devterin.socialmedia.dtos.request.ReactionRequest;
 import com.devterin.socialmedia.dtos.response.ReactionResponse;
 import com.devterin.socialmedia.entities.Post;
@@ -41,6 +42,11 @@ public class ReactionService {
 
         Reaction savedReaction = reactionRepository.save(reaction);
         int totalReactions = reactionRepository.countByPostId(post.getId());
+
+//        NotifyRequest notifyRequest = NotifyRequest.builder()
+//                .senderId()
+//                .message()
+//                .build();
 
         return ReactionResponse.builder()
                 .id(savedReaction.getId())
